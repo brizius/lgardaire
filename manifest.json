@@ -1,0 +1,13 @@
+{
+  "name": "My first webapp",
+  "short_name": "first webapp",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "My first webapp for testing PWA.",
+  "icons": [{
+    "src": "images/Amadeus_Logo.png",
+    "sizes": "648x95",
+    "type": "image/png"
+  }]
+}

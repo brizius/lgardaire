@@ -1,7 +1,7 @@
 {
   "name": "My first webapp",
   "short_name": "first webapp",
-  "start_url": ".",
+  "start_url": "index.html?display=0",
   "display": "standalone",
   "background_color": "#fff",
   "description": "My first webapp for testing PWA.",

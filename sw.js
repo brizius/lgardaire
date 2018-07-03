@@ -5,7 +5,9 @@ self.addEventListener('install', e => {
         caches.open(cacheName).then(cache => {
             return cache.addAll([
                 `/`,
-                `/index.html`
+                `/index.html`,
+                "/images/Amadeus_icon.png",
+                "/images/Amadeus_Logo.png",
             ])
                 .then(() => self.skipWaiting());
         })

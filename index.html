@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>My first PWA</title>
     <link rel="manifest" href="manifest.json">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js', {scope: '/'})
@@ -16,10 +17,27 @@
             });
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            let searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has('display')){
+                if (searchParams.get('display') === "0") {
+                    $("#displayType").text("PWA display");
+                } else if (searchParams.get('display') === "1") {
+                    $("#displayType").text("Website display");
+                } else {
+                    $("#displayType").text("Unknown display : "+searchParams.get('display'));
+                }
+            } else {
+                $("#displayType").text("No display specified");
+            }
+        })
+    </script>
 </head>
 <body>
-<img src="images/Amadeus_Logo.png" alt="Amadeus logo">
-<h1>Hello to Amadeus PWA</h1>
+    <img src="images/Amadeus_Logo.png" alt="Amadeus logo">
+    <h1>Hello to Amadeus PWA</h1>
+    <p id="displayType">Empty</p>
 </body>
 </html>
 

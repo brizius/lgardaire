@@ -7,14 +7,34 @@
   "description": "My first webapp for testing PWA.",
   "icons": [
     {
-      "src": "images/Amadeus_Logo.png",
-      "sizes": "648x95",
-      "type": "image/png"
+      "src": "/images/Amadeus_icon48.png",
+      "type": "image/png",
+      "sizes": "48x48"
     },
     {
-      "src": "/images/Amadeus_icon.png",
+      "src": "/images/Amadeus_icon72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/images/Amadeus_icon96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/images/Amadeus_icon144.png",
       "type": "image/png",
       "sizes": "144x144"
+    },
+    {
+      "src": "/images/Amadeus_icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/Amadeus_icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }

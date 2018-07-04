@@ -7,7 +7,7 @@ let swRegistration = null;
 function loadServiceWorkers() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('sw.js', {scope: '/lgardaire/'})
+        navigator.serviceWorker.register('/lgardaire/sw.js', {scope: '/'})
             .then(function (registration) {
                 console.log('Service Worker Registered');
                 swRegistration = registration;

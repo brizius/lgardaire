@@ -9,25 +9,22 @@ let swRegistration = null;
 function loadServiceWorkers() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('sw.js')
+        navigator.serviceWorker.register('cache_sw.js')
             .then(function (registration) {
                 console.log('Service Worker Registered');
                 swRegistration = registration;
                 initializeUI();
             });
-        navigator.serviceWorker.ready.then(function (registration) {
-            console.log('Service Worker Ready');
-        });
 
-        // navigator.serviceWorker.register('/push_notification.js', {scope: '/'})
-        //     .then(function (registrationPush) {
-        //         console.log('Push notification Service Worker Registered');
-        //         swRegistration = registrationPush;
-        //         initializeUI();
-        //     });
-        // navigator.serviceWorker.ready.then(function (registrationPush) {
-        //     console.log('Push notification Service Worker Ready');
-        // });
+        navigator.serviceWorker.register('push_notification_sw.js')
+            .then(function (registrationPush) {
+                console.log('Push notification Service Worker Registered');
+                swRegistration = registrationPush;
+                initializeUI();
+            });
+        navigator.serviceWorker.ready.then(function (registration) {
+            console.log('Service Workers Ready');
+        });
     } else {
         console.warn('Push messaging is not supported');
     }
@@ -64,7 +61,7 @@ function updateBtn() {
 }
 
 function initializeUI() {
-    pushButton.addEventListener('click', function() {
+    pushButton.addEventListener('click', function () {
         pushButton.disabled = true;
         if (isSubscribed) {
             unsubscribeUser();
@@ -72,10 +69,8 @@ function initializeUI() {
             subscribeUser();
         }
     });
-
-    // Set the initial subscription value
     swRegistration.pushManager.getSubscription()
-        .then(function(subscription) {
+        .then(function (subscription) {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
                 console.log('User is subscribed ');
@@ -103,13 +98,13 @@ function subscribeUser() {
         userVisibleOnly: true,
         applicationServerKey: applicationServerKey
     })
-        .then(function(subscription) {
+        .then(function (subscription) {
             console.log('User is subscribed.');
             updateSubscriptionOnServer(subscription);
             isSubscribed = true;
             updateBtn();
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log('Failed to subscribe the user: ', err);
             updateBtn();
         });
@@ -117,15 +112,15 @@ function subscribeUser() {
 
 function unsubscribeUser() {
     swRegistration.pushManager.getSubscription()
-        .then(function(subscription) {
+        .then(function (subscription) {
             if (subscription) {
                 return subscription.unsubscribe();
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log('Error unsubscribing', error);
         })
-        .then(function() {
+        .then(function () {
             updateSubscriptionOnServer(null);
 
             console.log('User is unsubscribed.');

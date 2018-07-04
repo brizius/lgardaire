@@ -1,5 +1,7 @@
 const applicationServerPublicKey = 'BEKaSr_henOAd_PE47UIHt8Fh-stjFaWTsli1tFNtktA2WjODut1PgvriylcMAczH4d_3JP34PCSspZPAX2WR_w';
 const pushButton = document.querySelector('.js-push-btn');
+const subscriptionJson = document.querySelector('.js-subscription-json');
+const subscriptionDetails = document.querySelector('.js-subscription-details');
 
 let isSubscribed = false;
 let swRegistration = null;
@@ -7,7 +9,7 @@ let swRegistration = null;
 function loadServiceWorkers() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('/lgardaire/sw.js', {scope: '/'})
+        navigator.serviceWorker.register('/sw.js', {scope: '/'})
             .then(function (registration) {
                 console.log('Service Worker Registered');
                 swRegistration = registration;
@@ -76,10 +78,11 @@ function initializeUI() {
         .then(function(subscription) {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
-                console.log('User is subscribed '+JSON.stringify(subscription));
+                console.log('User is subscribed ');
             } else {
                 console.log('User is NOT subscribed.');
             }
+            updateSubscriptionOnServer(subscription);
             updateBtn();
         });
 }
@@ -87,9 +90,10 @@ function initializeUI() {
 function updateSubscriptionOnServer(subscription) {
     // TODO: Send subscription to application server
     if (subscription) {
-        console.log(JSON.stringify(subscription))
+        subscriptionJson.textContent = JSON.stringify(subscription);
+        subscriptionDetails.style.display = "block";
     } else {
-        console.log("Not subscribed")
+        subscriptionDetails.style.display = "none";
     }
 }
 

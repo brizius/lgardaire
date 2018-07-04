@@ -7,7 +7,8 @@ self.addEventListener('install', e => {
                 "./",
                 `./index.html`,
                 "./images/Amadeus_Logo.png",
-                "./images/Amadeus_icon144.png"
+                "./images/Amadeus_icon144.png",
+                "./images/Amadeus_icon192.png"
             ])
                 .then(() => self.skipWaiting());
         })

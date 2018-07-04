@@ -7,7 +7,7 @@ let swRegistration = null;
 function loadServiceWorkers() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('/sw.js', {scope: '/'})
+        navigator.serviceWorker.register('sw.js')
             .then(function (registration) {
                 console.log('Service Worker Registered');
                 swRegistration = registration;
@@ -65,7 +65,7 @@ function initializeUI() {
     pushButton.addEventListener('click', function() {
         pushButton.disabled = true;
         if (isSubscribed) {
-            // TODO: Unsubscribe user
+            unsubscribeUser();
         } else {
             subscribeUser();
         }
@@ -76,7 +76,7 @@ function initializeUI() {
         .then(function(subscription) {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
-                console.log('User IS subscribed.');
+                console.log('User is subscribed '+JSON.stringify(subscription));
             } else {
                 console.log('User is NOT subscribed.');
             }
@@ -107,6 +107,26 @@ function subscribeUser() {
         })
         .catch(function(err) {
             console.log('Failed to subscribe the user: ', err);
+            updateBtn();
+        });
+}
+
+function unsubscribeUser() {
+    swRegistration.pushManager.getSubscription()
+        .then(function(subscription) {
+            if (subscription) {
+                return subscription.unsubscribe();
+            }
+        })
+        .catch(function(error) {
+            console.log('Error unsubscribing', error);
+        })
+        .then(function() {
+            updateSubscriptionOnServer(null);
+
+            console.log('User is unsubscribed.');
+            isSubscribed = false;
+
             updateBtn();
         });
 }

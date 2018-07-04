@@ -31,12 +31,20 @@ self.addEventListener('push', event => {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-    const title = 'Push Codelab';
+    const title = 'Push from My first PWA';
     const options = {
-        body: 'Yay it works.',
+        body: 'Push notification test',
         icon: 'images/Amadeus_icon144.png',
         badge: 'images/Amadeus_icon144.png'
     };
 
     event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+    console.log('[Service Worker] Notification click Received.');
+    event.notification.close();
+    // event.waitUntil(
+    //     clients.openWindow('https://developers.google.com/web/')
+    // );
 });

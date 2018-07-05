@@ -16,7 +16,7 @@ function loadServiceWorkers() {
                 initializeUI();
             });
         navigator.serviceWorker.ready.then(function (registration) {
-            console.log('Service Workers Ready');
+            console.log('Service Worker Ready');
         });
     } else {
         console.warn('Push messaging is not supported');

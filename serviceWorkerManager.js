@@ -9,17 +9,10 @@ let swRegistration = null;
 function loadServiceWorkers() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('cache_sw.js')
+        navigator.serviceWorker.register('sw.js')
             .then(function (registration) {
                 console.log('Service Worker Registered');
                 swRegistration = registration;
-                initializeUI();
-            });
-
-        navigator.serviceWorker.register('push_notification_sw.js')
-            .then(function (registrationPush) {
-                console.log('Push notification Service Worker Registered');
-                swRegistration = registrationPush;
                 initializeUI();
             });
         navigator.serviceWorker.ready.then(function (registration) {

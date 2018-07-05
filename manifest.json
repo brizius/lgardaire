@@ -3,7 +3,8 @@
   "short_name": "first webapp",
   "start_url": "index.html?display=0",
   "display": "standalone",
-  "background_color": "#fff",
+  "background_color": "#0be",
+  "theme_color": "#4285f4",
   "description": "My first webapp for testing PWA.",
   "icons": [
     {

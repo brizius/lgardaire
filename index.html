@@ -16,6 +16,7 @@
     <section class="js-subscription-details">
         <pre><code class="js-subscription-json"></code></pre>
     </section>
+    <button id="installer" hidden>Install the app</button>
 
     <script src="serviceWorkerManager.js"></script>
     <script>
@@ -34,6 +35,28 @@
                 $("#displayType").text("No display specified");
             }
         })
+    </script>
+    <script>
+        var btnInstall = document.querySelector("#installer");
+        btnInstall.addEventListener('click', () => {
+            btnInstall.hidden = true;
+            installPromptEvent.prompt();
+            installPromptEvent.userChoice.then((choice) => {
+                if (choice.outcome === 'accepted') {
+                    console.log('User accepted the prompt');
+                } else {
+                    console.log('User dismissed the prompt');
+                }
+                installPromptEvent = null;
+            });
+        });
+
+        let installPromptEvent;
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            installPromptEvent = event;
+            btnInstall.hidden = false;
+        });
     </script>
 </body>
 </html>

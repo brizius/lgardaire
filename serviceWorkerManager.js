@@ -10,6 +10,10 @@ function initializeNotificationSystem(){
     window.addEventListener("offline", function () {
         displayNotification('You are now offline', "grey");
     });
+    window.addEventListener("online", function () {
+        var notification = document.getElementById('offlineNotification');
+        notification.hidden = true;
+    });
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.addEventListener('controllerchange', function(event){
             console.log(

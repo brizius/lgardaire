@@ -1,6 +1,8 @@
 [
   "./",
   "./index.html",
+  "./style/style.css",
+  "./serviceWorkerManager.js",
   "./images/Amadeus_Logo.png",
   "./images/Amadeus_icon144.png",
   "./images/Amadeus_icon192.png"

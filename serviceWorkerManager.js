@@ -18,9 +18,32 @@ function loadServiceWorkers() {
         navigator.serviceWorker.ready.then(function (registration) {
             console.log('Service Worker Ready');
         });
+        navigator.serviceWorker.addEventListener('controllerchange', function(event){
+            console.log(
+                '[Controllerchange] A "controllerchange" event has happened ' +
+                'within navigator.serviceWorker: ', event
+            );
+            navigator.serviceWorker.controller.addEventListener('statechange',
+                function() {
+                    console.log('[Controllerchange][Statechange] ' +
+                        'A "statechange" has occured: ', this.state
+                    );
+                    if (this.state === 'activated') {
+                        displayNotification('You can now go offline ! Files are cached', "forestgreen");
+                    }
+                }
+            );
+        });
     } else {
         console.warn('Push messaging is not supported');
     }
+}
+
+function displayNotification(message, color) {
+    var notification = document.getElementById('offlineNotification');
+    notification.textContent = message;
+    notification.style.backgroundColor = color;
+    notification.hidden = false;
 }
 
 function urlB64ToUint8Array(base64String) {

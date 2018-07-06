@@ -1,0 +1,11 @@
+.notification{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: grey;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    opacity: 1;
+    transition: opacity 2s;
+}

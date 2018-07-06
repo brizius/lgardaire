@@ -6,18 +6,11 @@ const subscriptionDetails = document.querySelector('.js-subscription-details');
 let isSubscribed = false;
 let swRegistration = null;
 
-function loadServiceWorkers() {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-        console.log("Service Worker and Push Manager available");
-        navigator.serviceWorker.register('sw.js')
-            .then(function (registration) {
-                console.log('Service Worker Registered');
-                swRegistration = registration;
-                initializeUI();
-            });
-        navigator.serviceWorker.ready.then(function (registration) {
-            console.log('Service Worker Ready');
-        });
+function initializeNotificationSystem(){
+    window.addEventListener("offline", function () {
+        displayNotification('You are now offline', "grey");
+    });
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.addEventListener('controllerchange', function(event){
             console.log(
                 '[Controllerchange] A "controllerchange" event has happened ' +
@@ -33,6 +26,21 @@ function loadServiceWorkers() {
                     }
                 }
             );
+        });
+    }
+}
+
+function loadServiceWorkers() {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+        console.log("Service Worker and Push Manager available");
+        navigator.serviceWorker.register('sw.js')
+            .then(function (registration) {
+                console.log('Service Worker Registered');
+                swRegistration = registration;
+                initializeUI();
+            });
+        navigator.serviceWorker.ready.then(function (registration) {
+            console.log('Service Worker Ready');
         });
     } else {
         console.warn('Push messaging is not supported');

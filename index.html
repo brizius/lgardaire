@@ -23,6 +23,7 @@
 
     <script src="serviceWorkerManager.js"></script>
     <script>
+        initializeNotificationSystem();
         loadServiceWorkers();
         $(document).ready(function () {
             let searchParams = new URLSearchParams(window.location.search);

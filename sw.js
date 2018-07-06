@@ -1,17 +1,23 @@
 const cacheName = `my_first_pwa`;
 self.addEventListener('install', e => {
-    const timeStamp = Date.now();
+    // const timeStamp = Date.now();
     e.waitUntil(
-        caches.open(cacheName).then(cache => {
-            return cache.addAll([
-                "./",
-                `./index.html`,
-                "./images/Amadeus_Logo.png",
-                "./images/Amadeus_icon144.png",
-                "./images/Amadeus_icon192.png"
-            ])
-                .then(() => self.skipWaiting());
-        })
+        caches.open(cacheName)
+            .then(function(cache) {
+                return fetch('files-to-cache.json').then(function(response) {
+                    return response.json();
+                }).then(function(files) {
+                    console.log('[Install] Adding files from JSON file: ', files);
+                    return cache.addAll(files);
+                });
+            })
+            .then(function() {
+                console.log(
+                    '[Install] All required resources have been cached',
+                    'The Service Worker was successfully installed'
+                );
+                return self.skipWaiting();
+            })
     );
 });
 

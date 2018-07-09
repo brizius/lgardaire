@@ -9,3 +9,14 @@
     opacity: 1;
     transition: opacity 2s;
 }
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    background-color: dimgrey;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: opacity 2s;
+}

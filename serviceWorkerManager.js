@@ -2,26 +2,29 @@ const applicationServerPublicKey = 'BEKaSr_henOAd_PE47UIHt8Fh-stjFaWTsli1tFNtktA
 const pushButton = document.querySelector('.js-push-btn');
 const subscriptionJson = document.querySelector('.js-subscription-json');
 const subscriptionDetails = document.querySelector('.js-subscription-details');
+const buttonUpdateSW = document.querySelector('#updateSW');
+const divUpdate = document.querySelector('#footer');
 
 let isSubscribed = false;
 let swRegistration = null;
 
-function initializeNotificationSystem(){
+function initializeNotificationSystem() {
     window.addEventListener("offline", function () {
         displayNotification('You are now offline', "grey");
     });
-    window.addEventListener("online", function () {
+    window.addEventListener("online", function (e) {
         var notification = document.getElementById('offlineNotification');
         notification.hidden = true;
+        divUpdate.hidden = false;
     });
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.addEventListener('controllerchange', function(event){
+        navigator.serviceWorker.addEventListener('controllerchange', function (event) {
             console.log(
                 '[Controllerchange] A "controllerchange" event has happened ' +
                 'within navigator.serviceWorker: ', event
             );
             navigator.serviceWorker.controller.addEventListener('statechange',
-                function() {
+                function () {
                     console.log('[Controllerchange][Statechange] ' +
                         'A "statechange" has occured: ', this.state
                     );
@@ -39,9 +42,13 @@ function loadServiceWorkers() {
         console.log("Service Worker and Push Manager available");
         navigator.serviceWorker.register('sw.js')
             .then(function (registration) {
-                console.log('Service Worker Registered');
+                buttonUpdateSW.onclick = function () {
+                    registration.update();
+                    divUpdate.hidden = true;
+                };
                 swRegistration = registration;
                 initializeUI();
+                console.log('Service Worker Registered');
             });
         navigator.serviceWorker.ready.then(function (registration) {
             console.log('Service Worker Ready');

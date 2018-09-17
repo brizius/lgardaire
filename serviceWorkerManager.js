@@ -2,6 +2,9 @@ const applicationServerPublicKey = 'BA4dnjHS4S9a-diuEBx4bO6qIW1gbJUNN7ysJyPJhRXg
 const pushButton = document.querySelector('.js-push-btn');
 const subscriptionJson = document.querySelector('.js-subscription-json');
 const subscriptionDetails = document.querySelector('.js-subscription-details');
+const debugDetails = document.querySelector('.debug-details');
+const debugText = document.querySelector('.debug-text');
+
 const buttonUpdateSW = document.querySelector('#updateSW');
 const divUpdate = document.querySelector('#footer');
 
@@ -81,16 +84,25 @@ function urlB64ToUint8Array(base64String) {
 }
 
 function updateBtn() {
-    if (Notification.permission === 'denied') {
-        pushButton.textContent = 'Push Messaging Blocked';
-        pushButton.disabled = true;
-        updateSubscriptionOnServer(null);
+
+
+    if(!window.Notification){
+        displayDebugMessage('Notifications not supported');
         return;
-    }
-    if (isSubscribed) {
-        pushButton.textContent = 'Disable Push Messaging';
-    } else {
-        pushButton.textContent = 'Enable Push Messaging';
+    }else{
+        if (Notification.permission === 'denied') {
+            displayDebugMessage('Notifications permission denied');
+            pushButton.disabled = true;
+            updateSubscriptionOnServer(null);
+            return;
+        }
+        if (isSubscribed) {
+            pushButton.textContent = 'Disable Push Messaging';
+        } else {
+            pushButton.textContent = 'Enable Push Messaging';
+            debugText.style.display = "block";
+        }
+        clearDebugMessage();
     }
     pushButton.disabled = false;
 }
@@ -163,4 +175,14 @@ function unsubscribeUser() {
 
             updateBtn();
         });
+}
+
+function displayDebugMessage(message){
+    debugText.text(message);
+    debugText.style.display = "block";
+}
+
+function clearDebugMessage(){
+    debugText.text('');
+    debugText.style.display = "none";
 }

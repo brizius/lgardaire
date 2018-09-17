@@ -39,11 +39,12 @@ self.addEventListener('push', event => {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-    const title = 'My first PWA';
+    const title = 'Icelandair';
     const options = {
         body: `${event.data.text()}`,
-        icon: 'images/Amadeus_icon144.png',
-        badge: 'images/Amadeus_icon144.png'
+        icon: 'images/icelandair_400x400.jpg',
+        badge: 'images/icelandair_400x400.jpg',
+        image: 'images/instagram-grid.png'
     };
 
     event.waitUntil(self.registration.showNotification(title, options));

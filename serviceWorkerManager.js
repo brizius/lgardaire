@@ -178,11 +178,11 @@ function unsubscribeUser() {
 }
 
 function displayDebugMessage(message){
-    debugText.text(message);
+    debugText.textContent = message;
     debugText.style.display = "block";
 }
 
 function clearDebugMessage(){
-    debugText.text('');
+    debugText.textContent = '';
     debugText.style.display = "none";
 }
